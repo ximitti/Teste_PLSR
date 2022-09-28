@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Modal from './components/Modal';
+import Card from './components/Card';
 import Stock from './data.json';
 
 export default function App() {
@@ -43,12 +43,16 @@ export default function App() {
     setFilteredProducts(() => filter);
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  }
+
   return (
     <>
       <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">Sports wear</a>
-          <form className="d-flex" role="search">
+          <form className="d-flex" role="search" onSubmit={handleSubmit}>
             <input
               className="form-control me-2"
               onChange={(e) => setInputSearch(e.target.value)}
@@ -81,46 +85,12 @@ export default function App() {
           { filteredProducts && filteredProducts.length
             ? filteredProducts && filteredProducts.length && filteredProducts.map( (product, i) => {
               return (
-                <div key={`item${i}`} className="col">
-                  <div className="card bg-light border-secondary">
-                    <img src={product.image_url} className="card-img-top" alt={product.name} />
-                    <div className="card-body">
-                      <h5 className="card-title">{product.name}</h5>
-                      <p className="card-text">${product.price}</p>
-                    </div>
-                    <a 
-                      className="btn btn-dark"
-                      data-bs-toggle="modal"
-                      href={`#item${i}`}
-                      role="button"
-                    >
-                      Detalhes do produto
-                    </a>
-                  </div>
-                  <Modal product={product} itemId={`item${i}`}/>
-                </div>
+                <Card key={`item${i}`} product={product} index={i} />
               )
             })
             : products && products.length && products.map( (product, i) => {
               return (
-                <div key={`item${i}`} className="col">
-                  <div className="card bg-light border-secondary">
-                    <img src={product.image_url} className="card-img-top" alt={product.name} />
-                    <div className="card-body">
-                      <h5 className="card-title">{product.name}</h5>
-                      <p className="card-text">${product.price}</p>
-                    </div>
-                    <a 
-                      className="btn btn-dark"
-                      data-bs-toggle="modal"
-                      href={`#item${i}`}
-                      role="button"
-                    >
-                      Detalhes do produto
-                    </a>
-                  </div>
-                  <Modal product={product} itemId={`item${i}`}/>
-                </div>
+                <Card key={`item${i}`} product={product} index={i} />
               )
             })
           }
