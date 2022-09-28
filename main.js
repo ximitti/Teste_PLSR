@@ -1,17 +1,7 @@
 class PrimeNumberList {
   static main(primesMustBeFounded) {
     const primeList = [];
-
     let nextNumber = 3;
-
-    // still used to mount the output
-    let PAGENUMBER = 0;
-    let PAGEOFFSET = 0;
-    let ROWOFFSET = 0;
-    let C = 0;
-    let RR = 50;
-    let CC = 4;
-    let M = primesMustBeFounded;
 
     // find all primes from first to the limit primesMustBeFounded
     while (primeList.length < primesMustBeFounded) {
@@ -28,27 +18,59 @@ class PrimeNumberList {
       nextNumber += 2;
     }
 
-    // 
-    PAGENUMBER = 1;
-    PAGEOFFSET = 1;
+    this.showResult(primesMustBeFounded, primeList);
+  }
 
-    while (PAGEOFFSET <= M) {
-      console.log("Page ", PAGENUMBER);
-      for (
-        ROWOFFSET = PAGEOFFSET;
-        ROWOFFSET <= PAGEOFFSET + RR - 1;
-        ROWOFFSET++
-      ) {
-        let aux = [];
-        for (C = 0; C <= CC - 1; C++) {
-          if (ROWOFFSET + C * RR <= M) {
-              aux.push(primeList[ROWOFFSET + C * RR]);
-          }
+  static showResult(limit, list) {
+  // building data structure
+  const maxDataPerPage = 200;
+  const maxRows = 50;
+  const numberOfPages = Math.ceil(limit / maxDataPerPage);
+  const pagesData = {};
+  let nextIndex = 0;
+
+  for (let p = 1; p <= numberOfPages; p++) {
+    let rowIndex = 0;
+    let columnIndex = 0;
+    let registerCount = 1;
+
+    pagesData[p] = [];
+
+    for (let i = nextIndex; i < list.length; i++) {
+      if (rowIndex < maxRows) {
+        if (!pagesData[p][rowIndex]){
+          pagesData[p][rowIndex] = [];
+          pagesData[p][rowIndex][columnIndex] = list[i];
+        } else {
+          pagesData[p][rowIndex][columnIndex] = list[i];
         }
-        console.log(aux.join('|'));
+        
+        rowIndex++;
+      } else {
+        rowIndex = 0;
+        columnIndex++;
+
+        if (columnIndex < 4) {
+        }
+        
+        pagesData[p][rowIndex][columnIndex] = list[i];
+        rowIndex++;
       }
-      PAGENUMBER++;
-      PAGEOFFSET += RR * CC;
+
+      if (registerCount < maxDataPerPage) {
+        registerCount++;
+      } else {
+        nextIndex = i + 1;
+        break;
+      }
+    }
+  }
+    // Presenting data with pagination
+    for (const [page, data] of Object.entries(pagesData)) {
+      console.log("Page ", page);
+      data.forEach(line => {
+        console.log(line.join('|'));
+      });
     }
   }
 

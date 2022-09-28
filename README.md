@@ -12,7 +12,16 @@ O código não está limpo.
 - Quantidade de loops aninhados, apesar de terem mecanismos que evitam percorrer a lista de forma linear.
 
 ## 4. Explique como o conceito de middlewares no Express.js pode ser utilizado para evitar repetição de código.
+No Express.js, os middlewares são processos intermediários executados durante a chamada de uma rota da API, onde podem ser tratados dados da requisição (informações do body ou query params, por exemplo), autenticações e outras necessidades.\
+Para evitar repetição de código na utilização de middleware pode-se isolar esse código que se repete em uma função que receba os parâmetros necessários ao middleware (req, res, next) e fazer a chamada da função nos pontos onde havia a repetição de código.
 
 ## 5. Tendo em vista duas abordagens de backend: uma utilizando um ORM (como Prisma e Sequelize) e outra utilizando apenas um query builder (como o Knex), quais as vantagens e desvantagens de cada abordagem?
+### ORM:
+- Vantagens:
+- Desvantagens:
+
+### Query builder:
+- Vantagens:
+- Desvantagens:
 
 ## 6. Faça uma query em SQL que traga em cada linha o nome de jogadores que se enfrentaram mais de duas vezes, onde em cada partida a soma dos pontos foi maior que 30 e a duração do jogo foi maior que 90 minutos. Não podem haver resultados repetidos.
